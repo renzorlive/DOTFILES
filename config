@@ -96,8 +96,8 @@ bindsym $mod+a focus parent
 #variables
 
 set $ws1 "1 "
-set $ws2 "2: 2"
-set $ws3 "3: 3"
+set $ws2 "2 "
+set $ws3 "3 "
 set $ws4 "4: 4"
 set $ws5 "5: 5"
 set $ws6 "6: 6"
@@ -134,6 +134,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 #assign
 
 assign [class="Firefox"] $ws1
+assign [class="Gnome-terminal"] $ws2
+assign [class="Sublime_text"] $ws3
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -188,7 +191,7 @@ hide_edge_borders both
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks -c /home/rnz/i3blocks.conf
         tray_output primary
         colors {
                 background $bg-color
@@ -205,4 +208,12 @@ bindsym $mod+shift+x exec lock.sh
 exec_always feh --bg-scale /home/rnz/Downloads/wall.jpeg
 exec firefox
 exec_always compton -f
-
+bindsym $mod+F5 exec "brightlight -p -d 10; brightscript"
+bindsym $mod+F6 exec "brightlight -p -i 10; brightscript"
+bindsym $mod+F11 exec amixer -D pulse sset Master 5%-
+bindsym $mod+F12 exec amixer -D pulse sset Master 5%+
+bindsym $mod+F10 exec amixer -D pulse sset Master 1+ toggle
+# change volume or toggle mute
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
